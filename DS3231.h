@@ -1,4 +1,4 @@
-/*
+X/*
  * DS3231.h
  * Copyright (c) 2025 Derek Molloy (www.derekmolloy.ie)
  * Modified by: Student Name
@@ -11,8 +11,12 @@
 namespace een1071 {
 
 class DS3231:public I2CDevice{
+   // Read and display time
+   void readTime();
 
-   // Your C++ code here
+   // Return temperature
+   float readTemperature();
+
 
 };
 
