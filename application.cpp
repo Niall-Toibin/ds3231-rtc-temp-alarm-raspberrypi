@@ -15,12 +15,13 @@ using namespace een1071;
 int main() {
     // Calls constructor to create clock object
 	// Uses I2C Bus 1.
-	DS3231 clock(1, 0x68) 
+
+	DS3231 clock(1, 0x68); 
 	
 	// Displays time and date
 	clock.readTime();
 
-	float temp = clock.readTemperature;
+	float temp = clock.readTemperature();
 	cout << "Temperature - " << temp << " C" << endl;
 	return 0;
 }

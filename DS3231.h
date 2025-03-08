@@ -10,7 +10,7 @@
 
 namespace een1071 {
 
-class DS3231:public I2CDevice{
+class DS3231 : public I2CDevice{
 public:
    // Constructor
    DS3231(unsigned int bus, unsigned int device);

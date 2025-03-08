@@ -1,4 +1,4 @@
-*
+/*
  * DS3231.cpp 
  * Copyright (c) 2025 Derek Molloy (www.derekmolloy.ie)
  * Modified by: Student Name
@@ -9,6 +9,7 @@
 #include <unistd.h>
 #include <math.h>
 #include <stdio.h>
+#include <stdint.h>
 
 using namespace std;
 
@@ -25,8 +26,10 @@ static uint8_t decimalToBcd (uint8_t decimal) {
 }
 
 // Constructor (Member Initalization) calls base class
-DS3231::DS3231(unsigned int bus, unsigned int device) : I2CDevice(bus, address)
-{}
+DS3231::DS3231(unsigned int bus, unsigned int device) : I2CDevice(bus, device)
+{
+
+}
 
 void DS3231::readTime() {
    // Defining variables for time registers. Converts each BCD value to decimal.
@@ -39,7 +42,7 @@ void DS3231::readTime() {
    uint8_t year  = bcdToDecimal(readRegister(0x06));
 
    cout << "Time - " << (int)hour << ":" << (int)min << ":"
-        << int(seconds) << endl;
+        << int(sec) << endl;
 
    cout << "Date - " << (int)date << "/ " << int(month) << "/"
         << int(year) << endl;
