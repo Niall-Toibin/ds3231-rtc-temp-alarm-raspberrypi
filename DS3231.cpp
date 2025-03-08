@@ -16,7 +16,7 @@ namespace een1071 {
 
 // Function to convert BCD to Decimal
 static uint8_t  bcdToDecimal (uint8_t bcd) {
-   return ((bcd >> 4) * 10 + (bcd & 0x0F);
+   return ((bcd >> 4) * 10 + (bcd & 0x0F));
 }
 
 // Function to convert Decimal to BCD
@@ -25,6 +25,7 @@ static uint8_t decimalToBcd (uint8_t decimal) {
 }
 
 void DS3231::readTime() {
+   // Defining variables for time registers. Converts each BCD value to decimal.
    uint8_t sec = bcdToDecimal(readRegister(0x00));
    uint8_t min = bcdToDecimal(readRegister(0x01));
    uint8_t hour = bcdToDecimal(readRegister(0x02));
@@ -33,7 +34,7 @@ void DS3231::readTime() {
    uint8_t month = bcdToDecimal(readRegister(0x05));
    uint8_t year  = bcdToDecimal(readRegister(0x06));
 
-   cout << "Time - " << (int)hours << ":" << (int)minutes << ":"
+   cout << "Time - " << (int)hour << ":" << (int)min << ":"
         << int(seconds) << endl;
 
    cout << "Date - " << (int)date << "/ " << int(month) << "/"
@@ -41,12 +42,16 @@ void DS3231::readTime() {
 }
 
 float DS3231::readTemperature() {
+   // 0x11 represents signed integer of temperature
+   // 0x12 2 MSb's represent the decimal portion of temperature
    uint8_t l_nib = readRegister(0x11);
    uint8_t r_nib = readRegister(0x12);
 
+   // Convert whole temperature value to integer
    int temp = (int)l_nib;
-   float temp2 = (r_nib >> 6) * 0.25f;
+   // Float has range [0, 0.25, 0.5, 0.75]
+   float temp2 = (r_nib >> 6) * 0.25f; 
 
-   return temp1 + temp2;
+   return temp + temp2;
 }
 }
