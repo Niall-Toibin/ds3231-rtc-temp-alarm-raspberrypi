@@ -32,6 +32,8 @@ public:
    void setAlarm2(uint8_t alarm2min, uint8_t alarm2hour, uint8_t alarm2val, bool dydt = false);
    void readAlarm2();
 
+   void enableInterrupts(bool alarm1, bool alarm2);
+
 };
 
 } /* namespace een1071 */
