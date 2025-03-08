@@ -163,6 +163,34 @@ void DS3231::readAlarm2() {
    cout << "Alarm 2." << endl;
    cout <<"Day/date = " << int(alarm2val) <<". Hour = " << int(alarm2hour) << ". Minute = " << int(alarm2min) << endl;
 }
+
+void DS3231::enableInterrupts(bool enAlarm1, bool enAlarm2) {
+   uint8_t controlRegister = readRegister(0x0E);
+
+   // Set ICTN to 1
+   controlRegister |= 0x04;
+
+   // Enable alarms
+   if (enAlarm1 == true) {
+      // Set A1IE
+      controlRegister |= 0x01;
+   }
+   else {
+      // Clear A1IE
+      controlRegister &= ~0x01;
+   }
+   if (enAlarm2 == true) {
+      // Set A2IE
+      controlRegister |= 0x02;
+   }
+   else {
+      // Clear A2IE
+      controlRegister &= ~0x02;
+   }
+   // Write to control
+   writeRegister(0x0E, controlRegister);
+
+}
 }
 
 
