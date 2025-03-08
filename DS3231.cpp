@@ -80,7 +80,7 @@ void DS3231::setTime(uint8_t year, uint8_t month, uint8_t date, uint8_t hour, ui
    writeRegister(0x06, yearBcd);
 
 }
-void DS3231::setAlarm1(uint8_t alarm1sec, uint8_t alarm1min, uint8_t alarm1hour, uint8_t alarm1val, bool dydt = false) {
+void DS3231::setAlarm1(uint8_t alarm1sec, uint8_t alarm1min, uint8_t alarm1hour, uint8_t alarm1val, bool dydt) {
    uint8_t secBcd = decimalToBcd(alarm1sec);
    uint8_t minBcd = decimalToBcd(alarm1min);
    uint8_t hourBcd = decimalToBcd(alarm1hour);
@@ -100,22 +100,29 @@ void DS3231::setAlarm1(uint8_t alarm1sec, uint8_t alarm1min, uint8_t alarm1hour,
    writeRegister(0x07, secBcd);
    writeRegister(0x08, minBcd);
    writeRegister(0x09, hourBcd);
-   writeRegister(0x0A, dayOrDateBcd);
+   writeRegister(0x0A, alarm1valBcd);
 
 }
 
 // Read and print registers 0x07, 0x08, 0x09, 0x0A.
 void DS3231::readAlarm1() {
-   uint8_t alarm1sec = readRegister(0x07) & 0x7F;
-   uint8_t alarm1min = readRegister(0x08) & 0x7F;
-   uint8_t alarm1hour = readRegister(0x09) & 0x7F;
-   uint8_t alarm1val = readRegister(0x0A) & 0x7F;
+   // Read registers, removing bit 7
+   uint8_t bcdsec = readRegister(0x07) & 0x7F;
+   uint8_t bcdmin = readRegister(0x08) & 0x7F;
+   uint8_t bcdhour = readRegister(0x09) & 0x7F;
+   uint8_t bcdval = readRegister(0x0A) & 0x7F;
+
+   // Convert register values to decimal
+   uint8_t alarm1sec = bcdToDecimal(bcdsec);
+   uint8_t alarm1min = bcdToDecimal(bcdmin);
+   uint8_t alarm1hour = bcdToDecimal(bcdhour & 0x3F);
+   uint8_t alarm1val = bcdToDecimal(bcdval & 0x3F);
+
 
    cout << "Alarm 1" << endl;
    cout << "Day or Date = " << int(alarm1val) << ". Hour = " << int(alarm1hour) << ". Minute = " << int(alarm1min) << ". Second = " << int(alarm1sec) << endl;
 }
 
-}
 
 // Set Alarm 2.
 void DS3231::setAlarm2(uint8_t alarm2min, uint8_t alarm2hour,
@@ -130,25 +137,34 @@ void DS3231::setAlarm2(uint8_t alarm2min, uint8_t alarm2hour,
          alarm2valBcd |= 0x40;
       }
 
+      hourBcd &= 0xBF; // 24 hour mode
+
       // Clear mask bits for exact mode
       minBcd &= 0x7F;
-      hourBcd &= 0xF;
-      alarm2valBcd &= 0xF;
+      hourBcd &= 0x7F;
+      alarm2valBcd &= 0x7F;
 
       writeRegister(0x0B, minBcd);
-      writeRegister(0x0B, hourBcd);
-      writeRegister(0x0B, alarm2valBcd);
+      writeRegister(0x0C, hourBcd);
+      writeRegister(0x0D, alarm2valBcd);
 
 }
 
 void DS3231::readAlarm2() {
-   uint8_t alarm2min = readRegister(0x0B) & 0x7F;
-   uint8_t alarm2hour = readRegister(0x0C) & 0x7F;
-   uint8_t alarm2val = readRegister(0x0D) & 0x7F;
+   uint8_t bcdmin = readRegister(0x0B) & 0x7F;
+   uint8_t bcdhour = readRegister(0x0C) & 0x7F;
+   uint8_t bcdval = readRegister(0x0D) & 0x7F;
+
+   // Convert bcd values to decimal
+   uint8_t alarm2min = bcdToDecimal(bcdmin);
+   uint8_t alarm2hour = bcdToDecimal(bcdhour & 0x3F);
+   uint8_t alarm2val = bcdToDecimal(bcdval & 0x3F);
 
    cout << "Alarm 2." << endl;
    cout <<"Day/date = " << int(alarm2val) <<". Hour = " << int(alarm2hour) << ". Minute = " << int(alarm2min) << endl;
 }
+}
+
 
 
 
