@@ -13,8 +13,14 @@ using namespace std;
 using namespace een1071;
 
 int main() {
+    // Calls constructor to create clock object
+	// Uses I2C Bus 1.
+	DS3231 clock(1, 0x68) 
+	
+	// Displays time and date
+	clock.readTime();
 
-	// Your application code here
-	cout << "DS3231 RTC Code for Assignment 1 EEN1071" << endl;
+	float temp = clock.readTemperature;
+	cout << "Temperature - " << temp << " C" << endl;
 	return 0;
 }
