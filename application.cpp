@@ -16,12 +16,17 @@ int main() {
     // Calls constructor to create clock object
 	// Uses I2C Bus 1.
 
-	DS3231 clock(1, 0x68); 
+	DS3231 rtcmodule(1, 0x68); 
 	
 	// Displays time and date
-	clock.readTime();
+	rtcmodule.readTime();
 
-	float temp = clock.readTemperature();
-	cout << "Temperature - " << temp << " C" << endl;
+	float temp = rtcmodule.readTemperature();
+	cout << "Temperature before set - " << temp << " C" << endl;
+
+	rtcmodule.setTime(25, 3, 8, 14, 47, 20);
+	cout << "Time set to 14.47.20. Date set to 8/3/25" << endl;
+
+	rtcmodule.readTime();
 	return 0;
 }

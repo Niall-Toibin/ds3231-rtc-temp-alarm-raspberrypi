@@ -7,6 +7,7 @@
 #ifndef DS3231_H_
 #define DS3231_H_
 #include"I2CDevice.h"
+#include <cstdint>
 
 namespace een1071 {
 
