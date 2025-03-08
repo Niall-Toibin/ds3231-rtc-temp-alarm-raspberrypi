@@ -1,4 +1,4 @@
-X/*
+/*
  * DS3231.h
  * Copyright (c) 2025 Derek Molloy (www.derekmolloy.ie)
  * Modified by: Niall Toibin
