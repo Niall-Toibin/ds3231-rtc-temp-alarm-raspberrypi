@@ -24,6 +24,10 @@ static uint8_t decimalToBcd (uint8_t decimal) {
    return ((decimal / 10) << 4) | (decimal % 10);
 }
 
+// Constructor (Member Initalization) calls base class
+DS3231::DS3231(unsigned int bus, unsigned int device) : I2CDevice(bus, address)
+{}
+
 void DS3231::readTime() {
    // Defining variables for time registers. Converts each BCD value to decimal.
    uint8_t sec = bcdToDecimal(readRegister(0x00));
