@@ -61,4 +61,23 @@ float DS3231::readTemperature() {
 
    return temp + temp2;
 }
+
+void DS3231::setTime(uint8_t year, uint8_t month, uint8_t date, uint8_t hour, uint8_t min, uint8_t sec) {
+   // Convert values to BCD
+   uint8_t yearBcd = decimalToBcd(year);
+   uint8_t monthBcd = decimalToBcd(month);
+   uint8_t dateBcd = decimalToBcd(date);
+   uint8_t hourBcd = decimalToBcd(hour);
+   uint8_t minBcd = decimalToBcd(min);
+   uint8_t secBcd = decimalToBcd(sec);
+
+   // Write each value to appropriate register
+   writeRegister(0x00, secBcd);
+   writeRegister(0x01, minBcd);
+   writeRegister(0x02, hourBcd);
+   writeRegister(0x04, dateBcd);
+   writeRegister(0x05, monthBcd);
+   writeRegister(0x06, yearBcd);
+
+}
 }
