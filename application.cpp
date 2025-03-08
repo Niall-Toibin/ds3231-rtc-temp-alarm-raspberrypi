@@ -29,14 +29,13 @@ int main() {
 
 	rtcmodule.readTime();
 
-	// Testing alarm 1.
-	rtcmodule.setAlarm1(10, 11, 12, 13, false);
-	cout << "Set alarm 1 for 12.11.10 on date 13" << endl;
+	// Set alarm 1 to trigger 10 seconds after time is set
+	rtcmodule.setAlarm1(30, 47, 14, 8, false);
+	cout << "Set alarm 1 for 14.47.30 on date 8" << endl;
 	rtcmodule.readAlarm1();
 
-	// Testing alarm 2
-	rtcmodule.setAlarm2(11, 12, 3, false);
-	cout << "Set alarm 2 for 12.11 on date 3" << endl;
-	rtcmodule.readAlarm2();
-	return 0;
+	rtcmodule.enableInterrupts(true, false);
+	cout << "Interrupt enabled (alarm 1)" << endl;
+
+	sleep(30);
 }
