@@ -34,6 +34,8 @@ public:
 
    void enableInterrupts(bool alarm1, bool alarm2);
 
+   void clearFlags();
+
 };
 
 } /* namespace een1071 */

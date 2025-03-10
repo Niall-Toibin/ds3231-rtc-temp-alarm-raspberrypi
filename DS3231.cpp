@@ -58,7 +58,7 @@ float DS3231::readTemperature() {
    // Float has range [0, 0.25, 0.5, 0.75]
    float temp2 = (r_nib >> 6) * 0.25f; 
 
-   return temp + temp2;
+   return l_nib + temp2;
 }
 
 void DS3231::setTime(uint8_t year, uint8_t month, uint8_t date, uint8_t hour, uint8_t min, uint8_t sec) {
@@ -192,8 +192,14 @@ void DS3231::enableInterrupts(bool enAlarm1, bool enAlarm2) {
 
    // clear flags
    statusRegister &= ~( (1 << 0) | (1 << 1));
-   writeRegister(0x0F, statusRegister)
+   writeRegister(0x0F, statusRegister);
 
+}
+
+void DS3231::clearFlags() {
+   uint8_t statusRegister = readRegister(0x0F);
+   statusRegister &= ~0x03;
+   writeRegister(0x0F, statusRegister);
 }
 }
 
