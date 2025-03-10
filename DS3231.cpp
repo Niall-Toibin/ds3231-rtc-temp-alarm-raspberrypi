@@ -51,11 +51,10 @@ void DS3231::readTime() {
 float DS3231::readTemperature() {
    // 0x11 represents signed integer of temperature
    // 0x12 2 MSb's represent the decimal portion of temperature
-   uint8_t l_nib = readRegister(0x11);
+   int8_t l_nib = static_cast<int8_t>(this->readRegister(0x11));
    uint8_t r_nib = readRegister(0x12);
 
-   // Convert whole temperature value to integer
-   int temp = (int)l_nib;
+
    // Float has range [0, 0.25, 0.5, 0.75]
    float temp2 = (r_nib >> 6) * 0.25f; 
 
