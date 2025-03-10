@@ -165,29 +165,34 @@ void DS3231::readAlarm2() {
 
 void DS3231::enableInterrupts(bool enAlarm1, bool enAlarm2) {
    uint8_t controlRegister = readRegister(0x0E);
+   uint8_t statusRegister = readRegister(0x0F);
 
    // Set ICTN to 1
-   controlRegister |= 0x04;
+   controlRegister |= (1 << 2);  
 
-   // Enable alarms
+   // Enable and disable alarm interrupts
    if (enAlarm1 == true) {
       // Set A1IE
-      controlRegister |= 0x01;
+      controlRegister |= (1 << 0); 
    }
    else {
       // Clear A1IE
-      controlRegister &= ~0x01;
+      controlRegister &= ~(1 << 0);
    }
    if (enAlarm2 == true) {
       // Set A2IE
-      controlRegister |= 0x02;
+      controlRegister |= (1 << 1);
    }
    else {
       // Clear A2IE
-      controlRegister &= ~0x02;
+      controlRegister &= (1 << 1);
    }
    // Write to control
    writeRegister(0x0E, controlRegister);
+
+   // clear flags
+   statusRegister &= ~( (1 << 0) | (1 << 1));
+   writeRegister(0x0F, statusRegister)
 
 }
 }
