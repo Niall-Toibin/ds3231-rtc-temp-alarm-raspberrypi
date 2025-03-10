@@ -201,7 +201,35 @@ void DS3231::clearFlags() {
    statusRegister &= ~0x03;
    writeRegister(0x0F, statusRegister);
 }
+
+
+
+
+void DS3231::setSquareWaveOutput(bool enable, uint8_t freq)
+{
+    
+    uint8_t controlRegister = readRegister(0x0E);
+
+    if (enable == 1) {
+       // Set ICTN bit for square wave mode
+        controlRegister &= ~(1 << 2);
+
+        // Clear rate bits
+        controlRegister &= ~(3 << 3);
+        // Then set them to the given rate:
+        controlRegister |= ((freq & 3) << 3);
+    } 
+    else {
+        // Set interrupt mode
+        controlRegister |= (1 << 2);
+        
+    }
+
+    writeRegister(0x0E, controlRegister);
 }
+
+}
+
 
 
 

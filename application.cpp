@@ -79,6 +79,8 @@ int main() {
 	gpiod_line_release(alarm_line);
     gpiod_line_release(led_line);
     gpiod_chip_close(chip);
-	cout << "LED on" << endl;
+	rtcmodule.setSquareWaveOutput(true, 1);
+	uint8_t controlRegister = rtcmodule.readRegister(0x0E);
+    cout << "Control Register's value, should be 0x08 - " << hex << int(controlRegister) << endl;
 	return 0;
 }
