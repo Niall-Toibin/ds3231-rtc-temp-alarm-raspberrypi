@@ -37,7 +37,7 @@ int main() {
 
 	// Set alarm 1 to trigger 20 seconds after time is set
 	rtcmodule.setAlarm1(40, 47, 14, 8, false);
-	cout << "Set alarm 1 for 14.47.30 on date 8" << endl;
+	cout << "Set alarm 1 for 14.47.40 on date 8" << endl;
 	rtcmodule.readAlarm1();
 
 	rtcmodule.enableInterrupts(true, false);
