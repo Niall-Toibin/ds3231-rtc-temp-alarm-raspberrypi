@@ -62,8 +62,17 @@ int main() {
             cout << "Alarm triggered" << endl;
             // Turn LED on
             gpiod_line_set_value(led_line, 1);
+			cout << "LED on" << endl;
             // Clear alarm flags
             rtcmodule.clearFlags();
+
+			// Leave LED on for 5 seconds
+			sleep(5);
+
+			// turn LED off
+			gpiod_line_set_value(led_line, 0);
+			cout << "LED off" << endl;
+
             break;
         }
     }
