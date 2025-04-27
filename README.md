@@ -105,8 +105,7 @@ LED off
 ---
 
 ## 5. License
-
-MIT © 2025 [Niall Tóibín](https://github.com/Niall-Toibin)
+Niall Tóibín 2025 (https://github.com/Niall-Toibin)
 
 ---
 
