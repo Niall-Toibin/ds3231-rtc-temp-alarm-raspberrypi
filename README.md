@@ -17,12 +17,10 @@ All functionality is implemented in **C++**.
 
 ## Features
 
-- 🗕️ **Time & Date Handling** – Read and set RTC time/date via I²C  
-- 🌡️ **Temperature Monitoring** – Read built-in temperature sensor  
-- ⏰ **Alarm Interrupt** – Configure Alarm 1 and trigger events via falling edge on SQW/INT pin  
-- 💡 **LED Indicator** – Visual feedback for alarm using GPIO output  
-- 💨 **Square-Wave Control** – Program square-wave output at various frequencies  
-- 🧠 **Clean Architecture** – Modular C++ classes with reusable I²C and GPIO layers
+- **Time & Date Handling** – Read and set RTC time/date via I²C  
+- **Temperature Monitoring** – Read built-in temperature sensor  
+- **Alarm Interrupt** – Configure Alarm 1 and trigger events via falling edge on SQW/INT pin  
+- **LED Indicator** – Visual feedback for alarm using GPIO output  
 
 ---
 
@@ -42,19 +40,18 @@ All functionality is implemented in **C++**.
 ---
 
 ## 2. Repository Structure
-
-```bash
-rtc-project/
-├── en-src/
-│   ├── application.cpp       # Main demo logic
-│   ├── DS3231.cpp/.h         # RTC driver class
-│   ├── I2CDevice.cpp/.h      # Generic I²C wrapper
-│   └── gpio.cpp              # GPIO control using libgpiod
-├── docs/                     # Wiring & timing diagrams
-└── README.md                 # This file
 ```
-
----
+rtc-project/
+├── DS3231.cpp          # RTC driver implementation
+├── DS3231.h            # RTC driver header
+├── I2CDevice.cpp       # Generic I²C communication implementation
+├── I2CDevice.h         # Generic I²C communication header
+├── application.cpp     # Main demo logic (alarm setup, temperature readout)
+├── gpio.cpp            # GPIO control using libgpiod (alarm pin handling)
+├── docs/               # Wiring & verification screenshots
+├── .gitignore          # Ignore list for object files, binaries, etc.
+└── README.md           # Project documentation (this file)
+```
 
 ## 3. Build & Run
 
